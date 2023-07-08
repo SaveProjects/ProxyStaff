@@ -1,2 +1,2 @@
 # ProxyStaff
-Official Staff plugin for Edmine Network Proxy.
+Official Staff plugin for Edmine Network Bungeecord.
