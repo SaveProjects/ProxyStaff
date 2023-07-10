@@ -24,10 +24,10 @@ public class CommandStaff extends Command {
                 help(sender);
             }
             if (args[0].equalsIgnoreCase("list")){
-                cmd(sender);
+
             }
             if(args[0].equalsIgnoreCase("cmd")){
-
+                cmd(sender);
             }
         }
     }
