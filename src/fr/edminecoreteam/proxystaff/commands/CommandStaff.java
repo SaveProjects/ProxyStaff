@@ -18,8 +18,7 @@ public class CommandStaff extends Command {
     public void execute(CommandSender sender, String[] args){
         if(args.length == 0){
             help(sender);
-        }
-        if(args.length == 1){
+        }else if(args.length == 1){
             if(args[0].equalsIgnoreCase("help")){
                 help(sender);
             }
@@ -30,6 +29,7 @@ public class CommandStaff extends Command {
                 cmd(sender);
             }
         }
+
     }
 
 

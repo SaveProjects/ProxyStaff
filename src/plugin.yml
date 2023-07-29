@@ -2,3 +2,9 @@ name: ProxyStaff
 version: 1.0
 main: fr.edminecoreteam.proxystaff.Main
 author: edmincoreteam
+
+commands:
+  mod:
+    description: Permet d'activer le /mod
+    usage: /mod
+    aliases: [moderation]

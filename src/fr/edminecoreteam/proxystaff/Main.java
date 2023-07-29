@@ -1,11 +1,17 @@
 package fr.edminecoreteam.proxystaff;
 
+import fr.edminecoreteam.proxystaff.commands.CommandMod;
 import fr.edminecoreteam.proxystaff.commands.CommandStaff;
 import fr.edminecoreteam.proxystaff.edorm.MySQL;
+import fr.edminecoreteam.proxystaff.utils.PlayerManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Plugin {
@@ -13,8 +19,16 @@ public class Main extends Plugin {
     private static Main instance;
     public static MySQL database;
 
+    public ArrayList<UUID> modList = new ArrayList<>();
+    public ArrayList<UUID> vanishList = new ArrayList<>();
+    public HashMap<UUID, PlayerManager> players = new HashMap<>();
+    public String staffPrefix = "§d§lSTAFF §8§l» ";
+
+
     @Override
     public void onEnable() {
+        databaseConnect();
+        instance = this;
         loadCommands();
     }
 
@@ -25,6 +39,7 @@ public class Main extends Plugin {
 
     private void loadCommands(){
         getProxy().getPluginManager().registerCommand(this, (Command)new CommandStaff(this));
+        getProxy().getPluginManager().registerCommand(this, (Command) new CommandMod(this));
     }
 
     private void databaseConnect() {
@@ -48,5 +63,5 @@ public class Main extends Plugin {
         }, 0L, 120L, TimeUnit.SECONDS);
     }
 
-    public static Main getInstance(){return Main.instance;}
+    public static Main getInstance(){return instance;}
 }
