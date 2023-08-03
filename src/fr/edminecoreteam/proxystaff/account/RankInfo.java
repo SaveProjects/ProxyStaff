@@ -30,9 +30,6 @@ public class RankInfo {
 
     public int getRankModule() { return rankData.getRankModule(); }
 
-    public String getPurchaseDate() { return rankData.getPurchaseDate(); }
-
-    public String getDeadLineDate() { return rankData.getDeadLineDate(); }
 
     public String getRankType() { return rankData.getRankType(); }
 }

@@ -1,8 +1,13 @@
 package fr.edminecoreteam.proxystaff;
 
+import fr.edminecoreteam.proxystaff.commands.CommandKick;
 import fr.edminecoreteam.proxystaff.commands.CommandMod;
+import fr.edminecoreteam.proxystaff.commands.CommandMute;
 import fr.edminecoreteam.proxystaff.commands.CommandStaff;
 import fr.edminecoreteam.proxystaff.edorm.MySQL;
+import fr.edminecoreteam.proxystaff.listeners.PlayerJoin;
+import fr.edminecoreteam.proxystaff.listeners.PlayerSwitch;
+import fr.edminecoreteam.proxystaff.listeners.TabCompleteListener;
 import fr.edminecoreteam.proxystaff.utils.PlayerManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
@@ -23,6 +28,8 @@ public class Main extends Plugin {
     public ArrayList<UUID> vanishList = new ArrayList<>();
     public HashMap<UUID, PlayerManager> players = new HashMap<>();
     public String staffPrefix = "§d§lSTAFF §8§l» ";
+    public ArrayList<UUID> staffList = new ArrayList<>();
+
 
 
     @Override
@@ -30,6 +37,7 @@ public class Main extends Plugin {
         databaseConnect();
         instance = this;
         loadCommands();
+        loadListeners();
     }
 
     @Override
@@ -40,12 +48,25 @@ public class Main extends Plugin {
     private void loadCommands(){
         getProxy().getPluginManager().registerCommand(this, (Command)new CommandStaff(this));
         getProxy().getPluginManager().registerCommand(this, (Command) new CommandMod(this));
+        getProxy().getPluginManager().registerCommand(this, new CommandKick(this));
+        getProxy().getPluginManager().registerCommand(this, new CommandMute(this));
+
+
+    }
+
+    private void loadListeners(){
+        getProxy().getPluginManager().registerListener(this, new PlayerSwitch());
+        getProxy().getPluginManager().registerListener(this, new TabCompleteListener());
+       // getProxy().getPluginManager().registerListener(this, new PlayerJoin());
     }
 
     private void databaseConnect() {
+
         (Main.database = new MySQL("jdbc:mysql://", "45.140.165.235", "22728-database", "22728-database", "S5bV5su4p9")).connexion();
         if (!database.isOnline()) { return; }
         refreshConnexion();
+
+        database.creatingTableMute();
     }
 
     public void refreshConnexion() {

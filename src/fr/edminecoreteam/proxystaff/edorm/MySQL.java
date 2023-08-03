@@ -63,9 +63,19 @@ public class MySQL
         }
     }
 
-    public void creatingTableLogin() {
+    public void creatingTableMute() {
         try {
-            PreparedStatement stm = MySQL.connection.prepareStatement("CREATE TABLE IF NOT EXISTS ed_login (`player_name` varchar(255) NOT NULL, `player_uuid` varchar(255), `player_password` varchar(255), `lastIP` varchar(255), `lastAuth` varchar(255), `isPremium` varchar(255), `isOnline` int(11), PRIMARY KEY (`player_name`), UNIQUE(`player_name`), INDEX(`player_name`)) CHARACTER SET utf8");
+            PreparedStatement stm = MySQL.connection.prepareStatement("CREATE TABLE IF NOT EXISTS ed_mute (" +
+                    "`mute_id` int NOT NULL AUTO_INCREMENT, " +
+                    "`player_uuid` varchar(255) NOT NULL, " +
+                    "`reason` varchar(255), " +
+                    "`mute_by_uuid` varchar(255) NOT NULL, " +
+                    "`mute_by_name` varchar(255) NOT NULL, " +
+                    "`confirmed_by_uuid` varchar(255) DEFAULT NULL, " +
+                    "`confirmed_by_name` varchar(255) DEFAULT NULL, " +
+                    "`mute_date` bigint(20) NOT NULL, " +
+                    "`mute_end_time` bigint(20) DEFAULT NULL, " +
+                    "PRIMARY KEY (`mute_id`), UNIQUE(`mute_id`))");
             stm.execute();
             stm.close();
         }

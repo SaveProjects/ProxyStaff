@@ -93,56 +93,6 @@ public class RankData {
         return "";
     }
 
-    public String getPurchaseDate()
-    {
-        if (hasRank())
-        {
-            try
-            {
-                PreparedStatement preparedStatement = MySQL.getConnection().prepareStatement("SELECT player_rank_purchase_date FROM ed_ranks WHERE player_uuid = ?");
-                preparedStatement.setString(1, p.getUniqueId().toString().replaceAll("-", ""));
-                String response = "";
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next())
-                {
-                    response = rs.getString("player_rank_purchase_date");
-                }
-                preparedStatement.close();
-                return response;
-            }
-            catch (SQLException e)
-            {
-                e.toString();
-            }
-        }
-        return "";
-    }
-
-    public String getDeadLineDate()
-    {
-        if (hasRank())
-        {
-            try
-            {
-                PreparedStatement preparedStatement = MySQL.getConnection().prepareStatement("SELECT player_rank_deadline_date FROM ed_ranks WHERE player_uuid = ?");
-                preparedStatement.setString(1, p.getUniqueId().toString().replaceAll("-", ""));
-                String response = "";
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next())
-                {
-                    response = rs.getString("player_rank_deadline_date");
-                }
-                preparedStatement.close();
-                return response;
-            }
-            catch (SQLException e)
-            {
-                e.toString();
-            }
-        }
-        return "";
-    }
-
     public int getRankModule()
     {
         if (hasRank())

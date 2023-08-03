@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+import javax.xml.soap.Text;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -20,14 +21,19 @@ public class PlayerManager {
         this.p = p;
     }
 
-    public static boolean hasPermission(ProxiedPlayer p){
-        RankInfo rankInfo = new RankInfo(p);
-        if(rankInfo.getRankModule() >= 13){
-            return true;
+    public static boolean hasPermission(ProxiedPlayer p, int permission){
+        if(p != null){
+            RankInfo rankInfo = new RankInfo(p);
+            if(rankInfo.getRankModule() >= permission){
+                return true;
+            }
         }
         return false;
     }
 
+    public static PlayerManager getFromPlayer(ProxiedPlayer p){
+        return main.players.get(p.getUniqueId());
+    }
 
     public static boolean isInModerationMod(ProxiedPlayer p){
         return main.modList.contains(p.getUniqueId());
@@ -36,19 +42,22 @@ public class PlayerManager {
     public void removeP(){
         main.players.remove(p.getUniqueId());
         main.modList.remove(p.getUniqueId());
-        sendPluginMessage.sendPlayerModActivation(p, getStaffList(), false);
+        sendPluginMessage.sendPlayerModActivation(p, getStaffList(p), false);
+        p.sendMessage(TextComponent.fromLegacyText(main.staffPrefix + "§cVous n'êtes plus en §cmode §cmodérateur §c!"));
+
     }
 
     public void init(){
         main.modList.add(p.getUniqueId());
         main.players.put(p.getUniqueId(), this);
-        sendPluginMessage.sendPlayerModActivation(p, getStaffList(), true);
+        sendPluginMessage.sendPlayerModActivation(p, getStaffList(p), true);
+        p.sendMessage(TextComponent.fromLegacyText(main.staffPrefix + "§aVous êtes désormais en §amode §aModérateur §a!"));
     }
 
-    public ArrayList<UUID> getStaffList() {
+    public static ArrayList<UUID> getStaffList(ProxiedPlayer player) {
         ArrayList<UUID> staffList = new ArrayList<>();
         for (ProxiedPlayer players : main.getProxy().getPlayers()) {
-            if(hasPermission(players) && players != p){
+            if(hasPermission(players, 13) && players != player){
                 staffList.add(players.getUniqueId());
             }
         }
