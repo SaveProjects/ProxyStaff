@@ -1,9 +1,6 @@
 package fr.edminecoreteam.proxystaff;
 
-import fr.edminecoreteam.proxystaff.commands.CommandKick;
-import fr.edminecoreteam.proxystaff.commands.CommandMod;
-import fr.edminecoreteam.proxystaff.commands.CommandMute;
-import fr.edminecoreteam.proxystaff.commands.CommandStaff;
+import fr.edminecoreteam.proxystaff.commands.*;
 import fr.edminecoreteam.proxystaff.edorm.MySQL;
 import fr.edminecoreteam.proxystaff.listeners.PlayerJoin;
 import fr.edminecoreteam.proxystaff.listeners.PlayerSwitch;
@@ -50,6 +47,7 @@ public class Main extends Plugin {
         getProxy().getPluginManager().registerCommand(this, (Command) new CommandMod(this));
         getProxy().getPluginManager().registerCommand(this, new CommandKick(this));
         getProxy().getPluginManager().registerCommand(this, new CommandMute(this));
+        getProxy().getPluginManager().registerCommand(this, new CommandNote(this));
 
 
     }
@@ -67,6 +65,8 @@ public class Main extends Plugin {
         refreshConnexion();
 
         database.creatingTableMute();
+        database.creatingTableKick();
+        database.creatingTableNote();
     }
 
     public void refreshConnexion() {

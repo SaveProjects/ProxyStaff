@@ -70,12 +70,44 @@ public class MySQL
                     "`player_uuid` varchar(255) NOT NULL, " +
                     "`reason` varchar(255), " +
                     "`mute_by_uuid` varchar(255) NOT NULL, " +
-                    "`mute_by_name` varchar(255) NOT NULL, " +
                     "`confirmed_by_uuid` varchar(255) DEFAULT NULL, " +
-                    "`confirmed_by_name` varchar(255) DEFAULT NULL, " +
-                    "`mute_date` bigint(20) NOT NULL, " +
-                    "`mute_end_time` bigint(20) DEFAULT NULL, " +
+                    "`mute_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(), " +
+                    "`mute_end` timestamp NULL DEFAULT NULL, " +
                     "PRIMARY KEY (`mute_id`), UNIQUE(`mute_id`))");
+            stm.execute();
+            stm.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void creatingTableKick() {
+        try {
+            PreparedStatement stm = MySQL.connection.prepareStatement("CREATE TABLE IF NOT EXISTS ed_kick (" +
+                    "`kick_id` int NOT NULL AUTO_INCREMENT, " +
+                    "`player_uuid` varchar(255) NOT NULL, " +
+                    "`kick_by_uuid` varchar(255) NOT NULL, " +
+                    "`reason` varchar(255) DEFAULT NULL, " +
+                    "`kick_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(), " +
+                    "PRIMARY KEY (`kick_id`), UNIQUE(`kick_id`))");
+            stm.execute();
+            stm.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void creatingTableNote() {
+        try {
+            PreparedStatement stm = MySQL.connection.prepareStatement("CREATE TABLE IF NOT EXISTS ed_note (" +
+                    "`note_id` int NOT NULL AUTO_INCREMENT, " +
+                    "`player_uuid` varchar(255) NOT NULL, " +
+                    "`note_by_uuid` varchar(255) NOT NULL, " +
+                    "`note_text` varchar(255) NOT NULL, " +
+                    "`note_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(), " +
+                    "PRIMARY KEY (`note_id`), UNIQUE(`note_id`))");
             stm.execute();
             stm.close();
         }

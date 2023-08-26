@@ -1,4 +1,4 @@
-package fr.edminecoreteam.proxystaff.account;
+package fr.edminecoreteam.proxystaff.account.rank;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -10,7 +10,7 @@ public class RankInfo {
     private ProxiedPlayer p;
     private RankData rankData;
 
-    public RankInfo (ProxiedPlayer p){
+    public RankInfo(ProxiedPlayer p){
         this.p = p;
         this.rankInfo = new HashMap<ProxiedPlayer, RankInfo>();
         this.rankData = new RankData(p);

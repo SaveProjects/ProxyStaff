@@ -1,14 +1,10 @@
 package fr.edminecoreteam.proxystaff.utils;
 
 import fr.edminecoreteam.proxystaff.Main;
-import fr.edminecoreteam.proxystaff.account.RankInfo;
-import net.md_5.bungee.BungeeCord;
-import net.md_5.bungee.api.chat.BaseComponent;
+import fr.edminecoreteam.proxystaff.account.rank.RankInfo;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import javax.xml.soap.Text;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -43,7 +39,7 @@ public class PlayerManager {
         main.players.remove(p.getUniqueId());
         main.modList.remove(p.getUniqueId());
         sendPluginMessage.sendPlayerModActivation(p, getStaffList(p), false);
-        p.sendMessage(TextComponent.fromLegacyText(main.staffPrefix + "§cVous n'êtes plus en §cmode §cmodérateur §c!"));
+        p.sendMessage(TextComponent.fromLegacyText(main.staffPrefix + "§cVous n'êtes plus en §cmode §cModérateur §c!"));
 
     }
 
@@ -57,7 +53,7 @@ public class PlayerManager {
     public static ArrayList<UUID> getStaffList(ProxiedPlayer player) {
         ArrayList<UUID> staffList = new ArrayList<>();
         for (ProxiedPlayer players : main.getProxy().getPlayers()) {
-            if(hasPermission(players, 13) && players != player){
+            if(hasPermission(players, 13)){
                 staffList.add(players.getUniqueId());
             }
         }

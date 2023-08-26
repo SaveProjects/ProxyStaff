@@ -1,6 +1,7 @@
 package fr.edminecoreteam.proxystaff.commands;
 
 import fr.edminecoreteam.proxystaff.Main;
+import fr.edminecoreteam.proxystaff.account.kick.KickInfo;
 import fr.edminecoreteam.proxystaff.utils.PlayerManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -33,27 +34,41 @@ public class CommandKick extends Command {
             }else{
                 ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
                 if(target != null){
+                    KickInfo kickInfo;
+                    if(sender instanceof ConsoleCommandSender){
+                        kickInfo = new KickInfo(target.getUniqueId().toString(), sender.getName());
+                    }else{
+                        kickInfo = new KickInfo(target.getUniqueId().toString(), p.getUniqueId().toString());
+                    }
                     ArrayList<UUID> staffList = PlayerManager.getStaffList(p);
                     String reason = null;
                     if(args.length > 1){
                         reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
                     }
                     if(reason == null){
+                        kickInfo.addKick();
                         target.disconnect("§6§LEDMINE §f§lNETWORK \n \n" +
                                 "§c§lVous avez été expulsé du serveur. \n \n \n" +
                                 "§c⚠ Toutes triches sur nos plateformes sont sanctionnées !");
 
                         for (UUID staff : staffList){
+                            if(staff == p.getUniqueId()){
+                                return;
+                            }
                             ProxiedPlayer staffP = ProxyServer.getInstance().getPlayer(staff);
                             staffP.sendMessage(TextComponent.fromLegacyText(Main.getInstance().staffPrefix + "§c" + sender.getName() + " §7a expulsé §c" + target.getName() + " §7!"));
                         }
                               //  "§aLe joueur §e" + target.getName() + " §aa été expulsé par §e" + p.getName() + " §e!"));
                     }else{
+                        kickInfo.addKick(reason);
                         target.disconnect("§6§LEDMINE §f§lNETWORK \n \n" +
                                 "§c§lVous avez été expulsé du serveur. \n \n \n" +
                                 "§cInfraction §8§l» §f" + reason + "\n \n \n" +
                                 "§c⚠ Toutes triches sur nos plateformes sont sanctionnées !");
                         for(UUID staff : staffList){
+                            if(staff == p.getUniqueId()){
+                                return;
+                            }
                             ProxiedPlayer staffP = ProxyServer.getInstance().getPlayer(staff);
                             staffP.sendMessage(TextComponent.fromLegacyText(Main.getInstance().staffPrefix +  "§c" + sender.getName() + "§7 a expulsé §c" + target.getName() + " §7pour §c" + reason + " §7!"));/*+
                                     "§aLe joueur §e" + target.getName() + " §aa été expulsé par §e" + p.getName() + " §apour : §e" + reason));*/

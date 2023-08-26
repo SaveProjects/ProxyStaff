@@ -1,4 +1,4 @@
-package fr.edminecoreteam.proxystaff.account;
+package fr.edminecoreteam.proxystaff.account.rank;
 
 import fr.edminecoreteam.proxystaff.edorm.MySQL;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
