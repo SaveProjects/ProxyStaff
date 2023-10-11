@@ -1,4 +1,4 @@
-package fr.edminecoreteam.proxystaff.account.kick;
+package fr.edminecoreteam.proxystaff.data.kick;
 
 
 import java.util.HashMap;

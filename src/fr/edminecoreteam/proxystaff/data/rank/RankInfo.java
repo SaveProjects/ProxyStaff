@@ -1,4 +1,4 @@
-package fr.edminecoreteam.proxystaff.account.rank;
+package fr.edminecoreteam.proxystaff.data.rank;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 

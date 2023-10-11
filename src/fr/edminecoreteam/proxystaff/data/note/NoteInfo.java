@@ -1,4 +1,4 @@
-package fr.edminecoreteam.proxystaff.account.note;
+package fr.edminecoreteam.proxystaff.data.note;
 
 import java.util.HashMap;
 import java.util.Map;

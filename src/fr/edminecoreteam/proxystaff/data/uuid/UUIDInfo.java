@@ -1,4 +1,4 @@
-package fr.edminecoreteam.proxystaff.account.uuid;
+package fr.edminecoreteam.proxystaff.data.uuid;
 
 import java.util.HashMap;
 import java.util.Map;

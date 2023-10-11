@@ -1,7 +1,8 @@
 package fr.edminecoreteam.proxystaff.utils;
 
 import fr.edminecoreteam.proxystaff.Main;
-import fr.edminecoreteam.proxystaff.account.rank.RankInfo;
+import fr.edminecoreteam.proxystaff.data.rank.RankInfo;
+import fr.edminecoreteam.proxystaff.data.staff.StaffMap;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -19,13 +20,26 @@ public class PlayerManager {
 
     public static boolean hasPermission(ProxiedPlayer p, int permission){
         if(p != null){
-            RankInfo rankInfo = new RankInfo(p);
-            if(rankInfo.getRankModule() >= permission){
-                return true;
+            if(StaffMap.isStaff(p.getUniqueId())){
+                if(StaffMap.getStaffLevel(p.getUniqueId()) >= permission){
+                    return true;
+                }
+            }else{
+                RankInfo rankInfo = new RankInfo(p);
+                int permPlayer = rankInfo.getRankModule();
+                if(permPlayer >= 10){
+                    StaffMap.addStaff(p.getUniqueId(), permPlayer);
+                }
+                if(permPlayer >= permission){
+                    return true;
+                }
             }
+
         }
         return false;
     }
+
+
 
     public static PlayerManager getFromPlayer(ProxiedPlayer p){
         return main.players.get(p.getUniqueId());
@@ -60,11 +74,4 @@ public class PlayerManager {
         return staffList;
     }
 
-    public void setVanished(boolean vanished){
-        if(vanished){
-            if(!main.vanishList.contains(p.getUniqueId())){
-                main.vanishList.add(p.getUniqueId());
-            }
-        }
-    }
 }

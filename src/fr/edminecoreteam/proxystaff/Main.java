@@ -2,7 +2,6 @@ package fr.edminecoreteam.proxystaff;
 
 import fr.edminecoreteam.proxystaff.commands.*;
 import fr.edminecoreteam.proxystaff.edorm.MySQL;
-import fr.edminecoreteam.proxystaff.listeners.PlayerJoin;
 import fr.edminecoreteam.proxystaff.listeners.PlayerSwitch;
 import fr.edminecoreteam.proxystaff.listeners.TabCompleteListener;
 import fr.edminecoreteam.proxystaff.utils.PlayerManager;
@@ -12,7 +11,6 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +20,6 @@ public class Main extends Plugin {
     public static MySQL database;
 
     public ArrayList<UUID> modList = new ArrayList<>();
-    public ArrayList<UUID> vanishList = new ArrayList<>();
     public HashMap<UUID, PlayerManager> players = new HashMap<>();
     public String staffPrefix = "§d§lSTAFF §8§l» ";
     public ArrayList<UUID> staffList = new ArrayList<>();

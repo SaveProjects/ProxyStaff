@@ -1,4 +1,4 @@
-package fr.edminecoreteam.proxystaff.account.uuid;
+package fr.edminecoreteam.proxystaff.data.uuid;
 
 import fr.edminecoreteam.proxystaff.edorm.MySQL;
 import net.md_5.bungee.api.ProxyServer;

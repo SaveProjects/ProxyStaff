@@ -1,7 +1,7 @@
 package fr.edminecoreteam.proxystaff.commands;
 
 import fr.edminecoreteam.proxystaff.Main;
-import fr.edminecoreteam.proxystaff.account.kick.KickInfo;
+import fr.edminecoreteam.proxystaff.data.kick.KickInfo;
 import fr.edminecoreteam.proxystaff.utils.PlayerManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -66,15 +66,14 @@ public class CommandKick extends Command {
                                 "§cInfraction §8§l» §f" + reason + "\n \n \n" +
                                 "§c⚠ Toutes triches sur nos plateformes sont sanctionnées !");
                         for(UUID staff : staffList){
-                            if(staff == p.getUniqueId()){
-                                return;
-                            }
                             ProxiedPlayer staffP = ProxyServer.getInstance().getPlayer(staff);
-                            staffP.sendMessage(TextComponent.fromLegacyText(Main.getInstance().staffPrefix +  "§c" + sender.getName() + "§7 a expulsé §c" + target.getName() + " §7pour §c" + reason + " §7!"));/*+
+                            if(staffP != sender){
+                                staffP.sendMessage(TextComponent.fromLegacyText(Main.getInstance().staffPrefix +  "§c" + sender.getName() + "§7 a expulsé §c" + target.getName() + " §7pour §c" + reason + " §7!"));/*+
                                     "§aLe joueur §e" + target.getName() + " §aa été expulsé par §e" + p.getName() + " §apour : §e" + reason));*/
+                            }
                         }
                     }
-                    sender.sendMessage(Main.getInstance().staffPrefix + "§7Vous avez expulsé §c" + target.getName() + "§7 avec succès !");
+                    sender.sendMessage(TextComponent.fromLegacyText(Main.getInstance().staffPrefix + "§7Vous avez expulsé §c" + target.getName() + "§7 avec succès !"));
 
                 }else{
                     sender.sendMessage(TextComponent.fromLegacyText(Main.getInstance().staffPrefix + "§cLe joueur §e" + args[0] + " §cn'est pas connecté au serveur !"));
